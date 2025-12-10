@@ -18,9 +18,11 @@ class LoginController extends Controller
     {
         // 1. Validasi Input
         $request->validate([
+            // Sesuaikan aturan validasi sesuai kebutuhan Anda
             'nip' => ['required', 'string', 'min:8'],
             'password' => ['required', 'string', 'min:6'],
         ], [
+            // Pesan error kustom
             'nip.required' => 'NIP wajib diisi.',
             'nip.string' => 'Format NIP tidak valid.',
             'nip.min' => 'NIP minimal 8 digit.',
@@ -28,23 +30,21 @@ class LoginController extends Controller
             'password.min' => 'Password minimal 6 karakter.',
         ]);
 
-        // 2. Kredensial untuk Autentikasi
-        $credentials = $request->only('nip', 'password');
+        $credentials = [
+            'nip' => $request->input('nip'),
+            'password' => $request->input('password'),
+        ];
 
-        // 3. Autentikasi
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            // Jika Autentikasi berhasil
             $request->session()->regenerate();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Login berhasil!',
-                'redirect' => '/dashboard' // Ganti dengan route dashboard Anda
+                'redirect' => '/dashboard-pkl'
             ], 200);
         }
 
-        // 4. Autentikasi gagal
-        // Kita akan melempar ValidationException agar respons error sesuai dengan format JSON
         throw ValidationException::withMessages([
             'nip' => ['NIP atau Password salah.']
         ]);
@@ -54,16 +54,19 @@ class LoginController extends Controller
      * Log the user out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logout(Request $request)
     {
         Auth::logout();
 
+        // Invalidasi session saat ini
         $request->session()->invalidate();
 
+        // Regenerasi token CSRF
         $request->session()->regenerateToken();
 
-        return redirect('/'); // Arahkan kembali ke halaman utama atau login
+        // Mengarahkan ke halaman utama/login
+        return redirect('/');
     }
 }

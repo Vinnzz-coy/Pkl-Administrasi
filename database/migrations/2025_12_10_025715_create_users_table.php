@@ -31,7 +31,7 @@ return new class extends Migration
         foreach ($admins as $nip) {
             DB::table('users')->insert([
                 'nip'        => $nip,
-                'password'   => Hash::make($nip), // password sama dengan NIP
+                'password'   => Hash::make($nip),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

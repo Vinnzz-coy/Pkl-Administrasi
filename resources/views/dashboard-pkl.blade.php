@@ -7,12 +7,21 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <style>
+        .profile-dropdown {
+            z-index: 40;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
 
+    <!-- SIDEBAR -->
     <div id="sidebar"
         class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300 z-20">
 
@@ -22,7 +31,6 @@
         </div>
 
         <nav class="p-4 space-y-1">
-
             <a href="#" class="flex items-center gap-3 p-3 rounded hover:bg-indigo-100">
                 <i class="fa-solid fa-gauge"></i> Dashboard
             </a>
@@ -58,50 +66,67 @@
             <a href="#" class="flex items-center gap-3 p-3 rounded hover:bg-indigo-100">
                 <i class="fa-solid fa-gear"></i> Pengaturan
             </a>
-
         </nav>
     </div>
 
+    <!-- OVERLAY -->
     <div id="overlay"
-        class="fixed inset-0 bg-black bg-opacity-40 hidden z-10"
-        onclick="toggleSidebar()"></div>
+        class="fixed inset-0 bg-black bg-opacity-40 hidden z-10"></div>
 
+    <!-- NAVBAR -->
     <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 px-6 py-4 flex items-center justify-between z-30">
 
         <div class="flex items-center gap-4">
 
-            <button onclick="toggleSidebar()" class="text-gray-700 text-2xl">
+            <button id="btnSidebar" class="text-gray-700 text-2xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
             <div class="flex items-center gap-3">
-                <img src="{{ asset('public/app/asset/smk.png') }}" class="h-10 w-10">
+                <img src="{{ asset('logo-smk.webp') }}" alt="Logo SMK" class="logo-img" style="width:40px; height:40px;">
                 <h2 class="text-2xl font-bold text-gray-700">Dashboard PKL</h2>
             </div>
         </div>
 
-        <!-- Profil + Notifikasi -->
         <div class="flex items-center gap-6">
 
-            <!-- Notifikasi -->
             <button class="relative">
                 <i class="fa-solid fa-bell text-gray-600 text-xl"></i>
-                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">
-                    
-                </span>
             </button>
 
-            <!-- Profil -->
-            <div class="flex items-center gap-3">
-                <div class="text-right">
-                    <p class="font-semibold text-gray-700">Admin</p>
-                    <p class="text-sm text-gray-500">Administrator</p>
+            <div class="relative">
+                <button id="profileButton"
+                        class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition duration-150">
+
+                    <div class="text-right hidden sm:block">
+                        <p class="font-semibold text-gray-700 text-sm">Admin</p>
+                        <p class="text-xs text-gray-500">Administrator</p>
+                    </div>
+
+                    <img src="https://ui-avatars.com/api/?name=Admin"
+                        class="w-10 h-10 rounded-full shadow" />
+                </button>
+
+                <div id="profileDropdownMenu"
+                    class="profile-dropdown absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 hidden">
+
+                    <a href="#"
+                        class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
+                        <i class="fa-solid fa-user"></i> My Profile
+                    </a>
+
+                    <div class="border-t border-gray-100 my-1"></div>
+
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </button>
+                    </form>
                 </div>
 
-                <img src="https://ui-avatars.com/api/?name=Admin"
-                     class="w-10 h-10 rounded-full shadow" />
             </div>
-
         </div>
     </nav>
 
@@ -137,50 +162,6 @@
         </div>
 
     </main>
-
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-
-            if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        }
-    </script>
-
-    <script>
-        const ctx = document.getElementById('absensiChart');
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Senin","Selasa","Rabu","Kamis","Jumat"],
-                datasets: [
-                    {
-                        label: "Hadir",
-                        data: [35, 40, 38, 45, 50],
-                        borderColor: "#4f46e5",
-                        backgroundColor: "rgba(79,70,229,0.3)",
-                        borderWidth: 2,
-                        tension: 0.3
-                    },
-                    {
-                        label: "Tidak Hadir",
-                        data: [5, 2, 4, 3, 1],
-                        borderColor: "#ef4444",
-                        backgroundColor: "rgba(239,68,68,0.3)",
-                        borderWidth: 2,
-                        tension: 0.3
-                    }
-                ]
-            }
-        });
-    </script>
 
 </body>
 </html>

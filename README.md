@@ -1,60 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="350" alt="Laravel Logo">
+</div>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Status Build"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Unduhan"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Versi Stabil Terbaru"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="Lisensi"></a>
-</p>
+<div align="center">
 
-## Tentang Laravel
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-red)](https://laravel.com)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)](https://www.postgresql.org)
+[![Vite](https://img.shields.io/badge/Vite-Bundler-purple)](https://vitejs.dev)
+[![License](https://img.shields.io/github/license/Vinnzz-coy/administrator-pkl)](LICENSE)
 
-Laravel adalah kerangka kerja aplikasi web dengan sintaks yang ekspresif dan elegan. Kami percaya pengembangan harus menjadi pengalaman yang menyenangkan dan kreatif untuk benar-benar memuaskan. Laravel menghilangkan kesulitan pengembangan dengan memudahkan tugas-tugas umum yang digunakan dalam banyak proyek web, seperti:
+</div>
 
-- [Mesin routing yang sederhana dan cepat](https://laravel.com/docs/routing).
-- [Kontainer injeksi dependensi yang kuat](https://laravel.com/docs/container).
-- Berbagai backend untuk penyimpanan [sesi](https://laravel.com/docs/session) dan [cache](https://laravel.com/docs/cache).
-- [ORM database](https://laravel.com/docs/eloquent) yang ekspresif dan intuitif.
-- [Migrasi skema](https://laravel.com/docs/migrations) yang independen dari database.
-- [Pemrosesan pekerjaan latar belakang yang robust](https://laravel.com/docs/queues).
-- [Siaran acara real-time](https://laravel.com/docs/broadcasting).
+## Aplikasi Administrasi PKL
 
-Laravel dapat diakses, kuat, dan menyediakan alat yang diperlukan untuk aplikasi yang besar dan robust.
+Aplikasi administrasi PKL berbasis web menggunakan Laravel, PostgreSQL, dan Vite.
 
-## Belajar Laravel
+Dokumentasi ini berisi langkah lengkap untuk instalasi dan konfigurasi project setelah clone dari GitHub.
 
-Laravel memiliki [dokumentasi](https://laravel.com/docs) paling ekstensif dan menyeluruh serta perpustakaan tutorial video dari semua kerangka kerja aplikasi web modern, menjadikannya mudah untuk memulai dengan kerangka kerja. Anda juga dapat memeriksa [Laravel Learn](https://laravel.com/learn), di mana Anda akan dipandu membuat aplikasi Laravel modern.
+Instalasi Project (Laravel + PostgreSQL + Vite)
 
-Jika Anda tidak ingin membaca, [Laracasts](https://laracasts.com) dapat membantu. Laracasts berisi ribuan tutorial video tentang berbagai topik termasuk Laravel, PHP modern, pengujian unit, dan JavaScript. Tingkatkan keterampilan Anda dengan menggali perpustakaan video kami yang komprehensif.
+# 1. Clone Repository
 
-## Sponsor Laravel
+git clone https://github.com/Vinnzz-coy/administrator-pkl.git
+cd administrator-pkl
 
-Kami ingin mengucapkan terima kasih kepada sponsor berikut atas pendanaan pengembangan Laravel. Jika Anda tertarik menjadi sponsor, silakan kunjungi [program Mitra Laravel](https://partners.laravel.com).
+# 2. Install Dependency Backend (Composer)
 
-### Mitra Premium
+composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# 3. Install Dependency Frontend (Vite)
 
-## Berkontribusi
+npm install
 
-Terima kasih telah mempertimbangkan untuk berkontribusi pada kerangka kerja Laravel! Panduan kontribusi dapat ditemukan di [dokumentasi Laravel](https://laravel.com/docs/contributions).
+# 4. Generate file .env
 
-## Kode Etik
+cp .env.example .env
 
-Untuk memastikan komunitas Laravel menyambut semua orang, silakan tinjau dan patuhi [Kode Etik](https://laravel.com/docs/contributions#code-of-conduct).
+# (Windows)
 
-## Kerentanan Keamanan
+copy .env.example .env
 
-Jika Anda menemukan kerentanan keamanan dalam Laravel, silakan kirim email kepada Taylor Otwell melalui [taylor@laravel.com](mailto:taylor@laravel.com). Semua kerentanan keamanan akan ditangani segera.
+# 5. Sesuaikan konfigurasi database PostgreSQL di file .env
 
-## Lisensi
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=administrasi_pkl
+DB_USERNAME=postgres
+DB_PASSWORD=YOUR_PASSWORD
 
-Kerangka kerja Laravel adalah perangkat lunak sumber terbuka yang dilisensikan di bawah [lisensi MIT](https://opensource.org/licenses/MIT).
+# 6. Generate key Laravel
 
+php artisan key:generate
+
+# 7. Migrasi database
+
+php artisan migrate
+
+# (Opsional bila ada seeder)
+
+php artisan db:seed
+
+# 8. Jalankan Laravel
+
+php artisan serve
+
+# 9. Jalankan Vite (agar CSS & JS aktif)
+
+npm run dev

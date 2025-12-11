@@ -16,13 +16,10 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        // 1. Validasi Input
         $request->validate([
-            // Sesuaikan aturan validasi sesuai kebutuhan Anda
             'nip' => ['required', 'string', 'min:8'],
             'password' => ['required', 'string', 'min:6'],
         ], [
-            // Pesan error kustom
             'nip.required' => 'NIP wajib diisi.',
             'nip.string' => 'Format NIP tidak valid.',
             'nip.min' => 'NIP minimal 8 digit.',
@@ -51,7 +48,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Log the user out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -60,13 +56,10 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        // Invalidasi session saat ini
         $request->session()->invalidate();
 
-        // Regenerasi token CSRF
         $request->session()->regenerateToken();
 
-        // Mengarahkan ke halaman utama/login
         return redirect('/');
     }
 }

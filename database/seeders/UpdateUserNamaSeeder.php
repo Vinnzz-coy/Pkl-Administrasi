@@ -12,7 +12,6 @@ class UpdateUserNamaSeeder extends Seeder
      */
     public function run(): void
     {
-        // Daftar NIP dan Nama Admin
         $admins = [
             '1987654321' => 'Admin Satu',
             '1976543210' => 'Admin Dua',

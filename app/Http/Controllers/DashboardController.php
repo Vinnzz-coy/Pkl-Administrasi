@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class Dashboard_Controller extends Controller
+class DashboardController extends Controller
 {
     public function index()
     {

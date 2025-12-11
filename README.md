@@ -1,8 +1,4 @@
-Baik, ini adalah isi dari file `README.md` yang sudah saya revisi dan buat lebih menarik serta jelas.
 
-Anda bisa menyalin teks di bawah ini dan menyimpannya sebagai `README.md` di root folder proyek Anda.
-
-````markdown
 ## 🚀 ADMINISTRASI PKL: Aplikasi Pengelolaan Praktik Kerja Lapangan
 
 <div align="center">
@@ -142,17 +138,6 @@ Aplikasi Laravel memerlukan dua proses yang berjalan bersamaan: server backend (
 
     Ini akan mengompilasi CSS dan JS agar fitur frontend seperti Livewire/Vue/React (jika digunakan) dapat berfungsi.
 
------
-
-### 🤝 Kontribusi
-
-Kami menyambut kontribusi\! Jika Anda menemukan bug atau memiliki saran, silakan buka **Issue** atau buat **Pull Request** ke repositori ini.
-
------
-
-### 📄 Lisensi
-
-Proyek ini dirilis di bawah [Lisensi MIT](https://www.google.com/search?q=LICENSE).
 
 ```
 

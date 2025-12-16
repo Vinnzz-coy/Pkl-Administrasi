@@ -95,70 +95,68 @@
 
     </div>
 
-<!-- Statistik PKL -->
-<div class="bg-white rounded-2xl shadow-md p-6 mb-8 animate-fade-in">
-    <h2 class="text-xl font-bold text-dark mb-6">Statistik PKL per Jurusan</h2>
+    <!-- Statistik PKL -->
+    <div class="bg-white rounded-2xl shadow-md p-6 mb-8 animate-fade-in">
+        <h2 class="text-xl font-bold text-dark mb-6">Statistik PKL per Jurusan</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        @foreach($jurusanData as $jurusan => $statusData)
-            @php
-                // Pastikan slug hanya huruf, angka, dan strip
-                $slug = Str::slug($jurusan, '-');
-            @endphp
-            <div class="chart-container bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-lg transition-all duration-300">
-                <h3 class="font-bold text-dark mb-4 text-center">{{ $jurusan }}</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach($jurusanData as $jurusan => $statusData)
+                @php
+                    $slug = Str::slug($jurusan, '-');
+                @endphp
+                <div class="chart-container bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-lg transition-all duration-300">
+                    <h3 class="font-bold text-dark mb-4 text-center">{{ $jurusan }}</h3>
 
-                <div class="relative h-48">
-                    <canvas id="chart-{{ $slug }}"></canvas>
-                </div>
-
-                <div class="mt-4 text-center">
-                    <p class="text-sm text-gray-600">
-                        Total Siswa: <span class="font-bold text-dark">{{ array_sum($statusData) }}</span>
-                    </p>
-                </div>
-            </div>
-        @endforeach
-    </div>
-</div>
-
-
-                <!-- Siswa Terbaru dan Perusahaan Mitra -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    <!-- Siswa Terbaru -->
-                    <div class="bg-white rounded-2xl shadow-md p-6 animate-fade-in">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-xl font-bold text-dark">Siswa Terbaru</h2>
-                            <a {{ route('dashboard') }} class="text-primary font-medium hover:text-secondary transition-colors duration-200 flex items-center">
-                                Lihat Semua <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                        <div class="space-y-4">
-                            @foreach($latestSiswa as $siswa)
-                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-200">
-                                    <div>
-                                        <h3 class="font-semibold text-dark">{{ $siswa->nama }}</h3>
-                                        <p class="text-gray-600 text-sm">
-                                            Jurusan: {{ $siswa->jurusan->jurusan ?? '-' }}
-                                        </p>
-                                        <p class="text-gray-600 text-sm">
-                                            DUDI: {{ $siswa->dudi->nama ?? '-' }}
-                                        </p>
-                                        <p class="text-gray-600 text-sm">
-                                            Pembimbing: {{ $siswa->pembimbing->nama ?? '-' }}
-                                        </p>
-                                        <p class="text-gray-600 text-sm">
-                                            Kendaraan: Kendaraan: {{ $siswa->kendaraan ?? '-' }}
-                                        </p>
-                                    </div>
-                                    <span class="text-xs font-medium px-3 py-1 rounded-full
-                                        {{ $siswa->status == 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                        {{ $siswa->status ?? 'Menunggu' }}
-                                    </span>
-                                </div>
-                            @endforeach
-                        </div>
+                    <div class="relative h-48">
+                        <canvas id="chart-{{ $slug }}"></canvas>
                     </div>
+
+                    <div class="mt-4 text-center">
+                        <p class="text-sm text-gray-600">
+                            Total Siswa: <span class="font-bold text-dark">{{ array_sum($statusData) }}</span>
+                        </p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <!-- Siswa Terbaru dan Perusahaan Mitra -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Siswa Terbaru -->
+            <div class="bg-white rounded-2xl shadow-md p-6 animate-fade-in">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-dark">Siswa Terbaru</h2>
+                    <a {{ route('dashboard') }} class="text-primary font-medium hover:text-secondary transition-colors duration-200 flex items-center">
+                        Lihat Semua <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            <div class="space-y-4">
+                    @foreach($latestSiswa as $siswa)
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-200">
+                            <div>
+                                <h3 class="font-semibold text-dark">{{ $siswa->nama }}</h3>
+                                <p class="text-gray-600 text-sm">
+                                    Jurusan: {{ $siswa->jurusan->jurusan ?? '-' }}
+                                </p>
+                                <p class="text-gray-600 text-sm">
+                                    DUDI: {{ $siswa->dudi->nama ?? '-' }}
+                                </p>
+                                <p class="text-gray-600 text-sm">
+                                    Pembimbing: {{ $siswa->pembimbing->nama ?? '-' }}
+                                </p>
+                                <p class="text-gray-600 text-sm">
+                                    Kendaraan: {{ $siswa->kendaraan ?? '-' }}
+                                </p>
+                            </div>
+                        <span class="text-xs font-medium px-3 py-1 rounded-full
+                            {{ $siswa->status == 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                            {{ $siswa->status ?? 'Menunggu' }}
+                        </span>
+                    </div>
+            @endforeach
+        </div>
+    </div>
 
                     <!-- Perusahaan Mitra -->
                     <div class="bg-white rounded-2xl shadow-md p-6 animate-fade-in" style="animation-delay: 0.2s">
@@ -197,7 +195,7 @@
                                 </div>
                                 <h3 class="font-bold text-dark mb-2">Tambah Siswa Baru</h3>
                             </div>
-                            <button onclick="window.location='{{ route('dashboard') }}'"
+                            <button onclick="window.location='{{ route('siswa.index') }}'"
                                     class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-2 transition-all duration-300">
                                 Aktif <i class="fas fa-arrow-right ml-2"></i>
                             </button>

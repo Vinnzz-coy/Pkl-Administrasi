@@ -12,7 +12,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswa = Siswa::latest()->get();
+        $siswa = Siswa::orderBy('created_at', 'desc')->paginate(10);
         return view('siswa.index', compact('siswa'));
     }
 

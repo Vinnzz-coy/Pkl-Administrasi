@@ -77,7 +77,7 @@
                     </p>
                     <p class="text-sm">
                         <strong>Kuota:</strong>
-                        {{ $dudi->sisaKuota() }} / {{ $dudi->daya_tampung }}
+                        {{ $dudi->siswas->count() }} / {{ $dudi->daya_tampung }}
                     </p>
                 </div>
             @endforeach

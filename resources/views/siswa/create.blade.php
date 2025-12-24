@@ -4,162 +4,188 @@
 
 @section('content')
 
-<div class="greeting-card rounded-2xl shadow-lg p-6 md:p-8 bg-linear-to-r from-blue-500 to-blue-600 text-white mb-6">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-            <h1 class="text-3xl md:text-4xl font-bold mb-2">
-                Tambah Siswa PKL
-            </h1>
-            <p class="text-blue-100 text-sm">
-                Form input data siswa peserta PKL
-            </p>
-        </div>
+{{-- ================= HEADER ================= --}}
+<div class="mb-6 animate-slide-down">
+    <div class="greeting-card rounded-2xl shadow-lg p-6 md:p-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold mb-1">
+                    Tambah Siswa PKL
+                </h1>
+                <p class="text-white/80 text-sm">
+                    Lengkapi data siswa peserta PKL
+                </p>
+            </div>
 
-        <a href="{{ route('siswa.index') }}"
-           class="bg-white text-blue-600 px-5 py-3 rounded-xl font-semibold shadow hover:bg-blue-50 transition">
-            ← Kembali
-        </a>
+            <a href="{{ route('siswa.index') }}"
+               class="px-6 py-3 rounded-xl bg-white text-primary font-semibold
+                      hover:bg-gray-100 transition">
+                ← Kembali
+            </a>
+        </div>
     </div>
 </div>
 
-<div class="bg-white p-6 md:p-8 rounded-2xl shadow mx-6">
-    <h2 class="text-2xl font-bold mb-6 text-blue-600">Masukkan Data</h2>
+{{-- ================= FORM ================= --}}
+<div class="container mx-auto">
+    <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 animate-scale-fade">
 
-    <form action="{{ route('siswa.store') }}" method="POST" class="space-y-5">
-        @csrf
+        <form action="{{ route('siswa.store') }}"
+              method="POST"
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @csrf
 
-        {{-- Nama --}}
-        <div>
-            <label class="font-medium">Nama</label>
-            <input type="text"
-                   name="nama"
-                   value="{{ old('nama') }}"
-                   class="w-full border rounded-lg px-3 py-2"
-                   required>
-        </div>
+            {{-- Nama --}}
+            <div>
+                <label class="block font-semibold mb-1">Nama</label>
+                <input type="text"
+                       name="nama"
+                       value="{{ old('nama') }}"
+                       required
+                       class="form-input"
+                       placeholder="Nama lengkap siswa">
+            </div>
 
-        {{-- Alamat --}}
-        <div>
-            <label class="font-medium">Alamat</label>
-            <textarea name="alamat"
-                      class="w-full border rounded-lg px-3 py-2">{{ old('alamat') }}</textarea>
-        </div>
+            {{-- Kelas --}}
+            <div>
+                <label class="block font-semibold mb-1">Kelas</label>
+                <input type="text"
+                       name="kelas"
+                       value="{{ old('kelas') }}"
+                       required
+                       class="form-input"
+                       placeholder="Contoh: XII">
+            </div>
 
-        {{-- Jenis Kelamin --}}
-        <div>
-            <label class="font-medium">Jenis Kelamin</label>
-            <select name="jenis_kelamin"
-                    class="w-full border rounded-lg px-3 py-2"
-                    required>
-                <option value="">-- Pilih --</option>
-                <option value="L" @selected(old('jenis_kelamin') == 'L')>Laki-laki</option>
-                <option value="P" @selected(old('jenis_kelamin') == 'P')>Perempuan</option>
-            </select>
-        </div>
+            {{-- Jenis Kelamin --}}
+            <div>
+                <label class="block font-semibold mb-1">Jenis Kelamin</label>
+                <select name="jenis_kelamin"
+                        required
+                        class="form-input">
+                    <option value="">-- Pilih --</option>
+                    <option value="L" @selected(old('jenis_kelamin') == 'L')>Laki-laki</option>
+                    <option value="P" @selected(old('jenis_kelamin') == 'P')>Perempuan</option>
+                </select>
+            </div>
 
-        {{-- Jurusan --}}
-        <div>
-            <label class="font-medium">Jurusan</label>
-            <select name="id_jurusan"
-                    class="w-full border rounded-lg px-3 py-2"
-                    {{ auth()->user()->role === 'admin_jurusan' ? 'disabled' : '' }}>
-
-                <option value="">-- Pilih --</option>
-
-                @foreach($jurusan as $j)
-                    <option value="{{ $j->id_jurusan }}"
-                        @selected(old('id_jurusan') == $j->id_jurusan)>
-                        {{ $j->jurusan }}
+            {{-- Kendaraan --}}
+            <div>
+                <label class="block font-semibold mb-1">Kendaraan</label>
+                <select name="kendaraan"
+                        required
+                        class="form-input">
+                    <option value="">-- Pilih --</option>
+                    <option value="pribadi" @selected(old('kendaraan') == 'pribadi')>
+                        Kendaraan Pribadi
                     </option>
-                @endforeach
-            </select>
-
-            {{-- kirim hidden jika admin jurusan --}}
-            @if(auth()->user()->role === 'admin_jurusan')
-                <input type="hidden" name="id_jurusan" value="{{ auth()->user()->jurusan_id }}">
-            @endif
-        </div>
-
-        {{-- Pembimbing --}}
-        <div>
-            <label class="font-medium">Pembimbing Sekolah</label>
-            <select name="id_pembimbing"
-                    class="w-full border rounded-lg px-3 py-2"
-                    required>
-                <option value="">-- Pilih --</option>
-                @foreach($pembimbing as $p)
-                    <option value="{{ $p->id_pembimbing }}"
-                        @selected(old('id_pembimbing') == $p->id_pembimbing)>
-                        {{ $p->nama }}
+                    <option value="umum" @selected(old('kendaraan') == 'umum')>
+                        Kendaraan Umum
                     </option>
-                @endforeach
-            </select>
-        </div>
+                </select>
+            </div>
 
-        {{-- DUDI --}}
-        <div>
-            <label class="font-medium">DUDI</label>
-            <select name="id_dudi"
-                    class="w-full border rounded-lg px-3 py-2"
-                    required>
+            {{-- Jurusan --}}
+            <div>
+                <label class="block font-semibold mb-1">Jurusan</label>
+                <select name="id_jurusan"
+                        class="form-input"
+                        {{ auth()->user()->role === 'admin_jurusan' ? 'disabled' : '' }}>
+                    <option value="">-- Pilih --</option>
+                    @foreach($jurusan as $j)
+                        <option value="{{ $j->id_jurusan }}"
+                            @selected(old('id_jurusan') == $j->id_jurusan)>
+                            {{ $j->jurusan }}
+                        </option>
+                    @endforeach
+                </select>
 
-                <option value="">-- Pilih --</option>
+                @if(auth()->user()->role === 'admin_jurusan')
+                    <input type="hidden"
+                           name="id_jurusan"
+                           value="{{ auth()->user()->jurusan_id }}">
+                @endif
+            </div>
 
-                @foreach($dudi as $d)
-                    <option value="{{ $d->id_dudi }}"
-                        {{ $d->isPenuh() ? 'disabled' : '' }}
-                        @selected(old('id_dudi') == $d->id_dudi)>
-                        {{ $d->nama }}
-                        ({{ $d->siswas->count() }}/{{ $d->daya_tampung }})
-                        {{ $d->isPenuh() ? ' - PENUH' : '' }}
-                    </option>
-                @endforeach
-            </select>
+            {{-- Pembimbing --}}
+            <div>
+                <label class="block font-semibold mb-1">Pembimbing Sekolah</label>
+                <select name="id_pembimbing"
+                        required
+                        class="form-input">
+                    <option value="">-- Pilih --</option>
+                    @foreach($pembimbing as $p)
+                        <option value="{{ $p->id_pembimbing }}"
+                            @selected(old('id_pembimbing') == $p->id_pembimbing)>
+                            {{ $p->nama }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-            <p class="text-xs text-gray-500 mt-1">
-                DUDI dengan kapasitas penuh tidak dapat dipilih
-            </p>
-        </div>
+            {{-- DUDI --}}
+            <div class="md:col-span-2">
+                <label class="block font-semibold mb-1">DUDI</label>
+                <select name="id_dudi"
+                        required
+                        class="form-input">
+                    <option value="">-- Pilih --</option>
 
-        {{-- Kelas --}}
-        <div>
-            <label class="font-medium">Kelas</label>
-            <input type="text"
-                   name="kelas"
-                   value="{{ old('kelas') }}"
-                   class="w-full border rounded-lg px-3 py-2"
-                   required>
-        </div>
+                    @foreach($dudi as $d)
+                        <option value="{{ $d->id_dudi }}"
+                            {{ $d->isPenuh() ? 'disabled' : '' }}
+                            @selected(old('id_dudi') == $d->id_dudi)>
+                            {{ $d->nama }}
+                            ({{ $d->siswas->count() }}/{{ $d->daya_tampung }})
+                            {{ $d->isPenuh() ? ' - PENUH' : '' }}
+                        </option>
+                    @endforeach
+                </select>
 
-        {{-- Kendaraan --}}
-        <div>
-            <label class="font-medium">Kendaraan</label>
-            <select name="kendaraan"
-                    class="w-full border rounded-lg px-3 py-2"
-                    required>
-                <option value="">-- Pilih --</option>
-                <option value="pribadi" @selected(old('kendaraan') == 'pribadi')>
-                    Kendaraan Pribadi
-                </option>
-                <option value="umum" @selected(old('kendaraan') == 'umum')>
-                    Kendaraan Umum
-                </option>
-            </select>
-        </div>
+                <p class="text-xs text-gray-500 mt-1">
+                    DUDI yang penuh tidak dapat dipilih
+                </p>
+            </div>
 
-        {{-- BUTTON --}}
-        <div class="flex justify-end gap-3 pt-4">
-            <a href="{{ route('siswa.index') }}"
-               class="px-4 py-2 rounded-lg border">
-                Batal
-            </a>
+            {{-- Alamat --}}
+            <div class="md:col-span-2">
+                <label class="block font-semibold mb-1">Alamat</label>
+                <textarea name="alamat"
+                          rows="3"
+                          class="form-input"
+                          placeholder="Alamat lengkap siswa">{{ old('alamat') }}</textarea>
+            </div>
 
-            <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                Simpan
-            </button>
-        </div>
+            {{-- BUTTON --}}
+            <div class="md:col-span-2 flex justify-between items-center mt-6">
 
-    </form>
+                <a href="{{ route('siswa.index') }}"
+                   class="px-6 py-3 rounded-xl border font-semibold
+                          hover:bg-gray-100 transition">
+                    ← Kembali
+                </a>
+
+                <div class="flex gap-3">
+                    <a href="{{ route('siswa.index') }}"
+                       class="px-6 py-3 rounded-xl border font-semibold
+                              hover:bg-gray-100 transition">
+                        Batal
+                    </a>
+
+                    <button
+                        class="bg-primary text-white px-6 py-3 rounded-xl font-semibold
+                               hover:bg-primary/90 hover:scale-105
+                               transition-all duration-300">
+                        <i class="fas fa-save mr-2"></i> Simpan Data
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
 </div>
+
+@include('layouts.animation')
 
 @endsection

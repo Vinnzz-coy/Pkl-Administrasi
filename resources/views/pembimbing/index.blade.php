@@ -94,9 +94,7 @@
 
             <tbody>
             @forelse($pembimbing as $item)
-                <tr
-                    onclick="window.location='{{ route('pembimbing.show', $item->id_pembimbing) }}'"
-                    class="border-b hover:bg-gray-50 cursor-pointer transition">
+                <tr class="border-b hover:bg-gray-50 transition">
 
                     <td class="px-4 py-3">
                         {{ $pembimbing->firstItem() + $loop->index }}

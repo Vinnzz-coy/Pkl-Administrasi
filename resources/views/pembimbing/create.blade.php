@@ -23,7 +23,8 @@
             </div>
 
             <a href="{{ route('pembimbing.index') }}"
-                class="bg-white text-primary px-5 py-3 rounded-xl shadow hover:bg-gray-100 transition">
+               class="bg-white text-primary px-5 py-3 rounded-xl shadow
+                      hover:bg-gray-100 transition">
                 <i class="fas fa-arrow-left mr-2"></i> Kembali
             </a>
 
@@ -43,7 +44,7 @@
         >
             @csrf
 
-            {{-- ================= DATA UTAMA ================= --}}
+            {{-- ================= DATA PEMBIMBING ================= --}}
             <div class="md:col-span-2">
                 <h2 class="text-lg font-bold mb-3 text-gray-700">
                     Data Pembimbing
@@ -54,14 +55,12 @@
             {{-- Nama --}}
             <div>
                 <label class="block font-semibold mb-1">Nama Lengkap</label>
-                <input
-                    type="text"
-                    name="nama"
-                    value="{{ old('nama') }}"
-                    class="form-input"
-                    placeholder="Nama lengkap pembimbing"
-                    required
-                >
+                <input type="text"
+                       name="nama"
+                       value="{{ old('nama') }}"
+                       class="form-input"
+                       placeholder="Nama lengkap pembimbing"
+                       required>
                 @error('nama')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -70,14 +69,12 @@
             {{-- NIP --}}
             <div>
                 <label class="block font-semibold mb-1">NIP</label>
-                <input
-                    type="text"
-                    name="nip"
-                    value="{{ old('nip') }}"
-                    class="form-input"
-                    placeholder="Nomor Induk Pegawai"
-                    required
-                >
+                <input type="text"
+                       name="nip"
+                       value="{{ old('nip') }}"
+                       class="form-input"
+                       placeholder="Nomor Induk Pegawai"
+                       required>
                 @error('nip')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -86,74 +83,64 @@
             {{-- Pangkat --}}
             <div>
                 <label class="block font-semibold mb-1">Pangkat</label>
-                <input
-                    type="text"
-                    name="pangkat"
-                    value="{{ old('pangkat') }}"
-                    class="form-input"
-                    placeholder="Penata Muda"
-                >
+                <input type="text"
+                       name="pangkat"
+                       value="{{ old('pangkat') }}"
+                       class="form-input"
+                       placeholder="Penata Muda">
             </div>
 
             {{-- Golongan --}}
             <div>
                 <label class="block font-semibold mb-1">Golongan</label>
-                <input
-                    type="text"
-                    name="golongan"
-                    value="{{ old('golongan') }}"
-                    class="form-input"
-                    placeholder="III/a"
-                >
+                <input type="text"
+                       name="golongan"
+                       value="{{ old('golongan') }}"
+                       class="form-input"
+                       placeholder="III/a">
             </div>
 
             {{-- Jabatan --}}
             <div>
                 <label class="block font-semibold mb-1">Jabatan</label>
-                <input
-                    type="text"
-                    name="jabatan"
-                    value="{{ old('jabatan') }}"
-                    class="form-input"
-                    placeholder="Guru Pembimbing"
-                >
+                <input type="text"
+                       name="jabatan"
+                       value="{{ old('jabatan') }}"
+                       class="form-input"
+                       placeholder="Guru Pembimbing">
             </div>
 
-            {{-- Jumlah Jam --}}
+            {{-- Jam Mengajar --}}
             <div>
-                <label class="block font-semibold mb-1">Jumlah Jam Mengajar / Minggu</label>
-                <input
-                    type="number"
-                    name="jumlah_jam_mengajar"
-                    min="0"
-                    value="{{ old('jumlah_jam_mengajar') }}"
-                    class="form-input"
-                    placeholder="Contoh: 24"
-                    required
-                >
+                <label class="block font-semibold mb-1">
+                    Jumlah Jam Mengajar / Minggu
+                </label>
+                <input type="number"
+                       name="jumlah_jam_mengajar"
+                       min="0"
+                       value="{{ old('jumlah_jam_mengajar') }}"
+                       class="form-input"
+                       placeholder="Contoh: 24"
+                       required>
             </div>
 
             {{-- Nomor HP --}}
             <div>
                 <label class="block font-semibold mb-1">Nomor HP</label>
-                <input
-                    type="text"
-                    name="no_hp"
-                    value="{{ old('no_hp') }}"
-                    class="form-input"
-                    placeholder="08xxxxxxxxxx"
-                >
+                <input type="text"
+                       name="no_hp"
+                       value="{{ old('no_hp') }}"
+                       class="form-input"
+                       placeholder="08xxxxxxxxxx">
             </div>
 
             {{-- Foto --}}
             <div>
                 <label class="block font-semibold mb-1">Foto Pembimbing</label>
-                <input
-                    type="file"
-                    name="foto"
-                    accept="image/*"
-                    class="form-input"
-                >
+                <input type="file"
+                       name="foto"
+                       accept="image/*"
+                       class="form-input">
                 <p class="text-xs text-gray-500 mt-1">
                     JPG / PNG maksimal 2MB
                 </p>
@@ -170,17 +157,13 @@
                     Pilih Satu atau Lebih DUDI
                 </label>
 
-                <select
-                    name="dudi_ids[]"
-                    multiple
-                    required
-                    class="form-input h-44"
-                >
+                <select name="dudi_ids[]"
+                        multiple
+                        required
+                        class="form-input h-44">
                     @foreach ($dudis as $dudi)
-                        <option
-                            value="{{ $dudi->id_dudi }}"
-                            {{ collect(old('dudi_ids'))->contains($dudi->id_dudi) ? 'selected' : '' }}
-                        >
+                        <option value="{{ $dudi->id_dudi }}"
+                            {{ collect(old('dudi_ids'))->contains($dudi->id_dudi) ? 'selected' : '' }}>
                             {{ $dudi->nama }} • {{ Str::limit($dudi->alamat, 45) }}
                         </option>
                     @endforeach
@@ -199,15 +182,15 @@
             <div class="md:col-span-2 flex justify-between items-center mt-8">
 
                 <a href="{{ route('pembimbing.index') }}"
-                    class="px-6 py-3 rounded-xl border font-semibold hover:bg-gray-100 transition">
+                   class="px-6 py-3 rounded-xl border font-semibold
+                          hover:bg-gray-100 transition">
                     Batal
                 </a>
 
-                <button
-                    type="submit"
-                    class="bg-primary text-white px-8 py-3 rounded-xl font-semibold
-                        hover:bg-primary/90 hover:scale-105 transition-all duration-300"
-                >
+                <button type="submit"
+                        class="bg-primary text-white px-8 py-3 rounded-xl font-semibold
+                               hover:bg-primary/90 hover:scale-105
+                               transition-all duration-300">
                     <i class="fas fa-save mr-2"></i> Simpan Data
                 </button>
 
@@ -216,5 +199,7 @@
         </form>
     </div>
 </div>
+
+@include('layouts.animation')
 
 @endsection

@@ -34,10 +34,9 @@
 
 
 <!-- ================= CONTENT ================= -->
-<div class="px-6 py-6 space-y-6">
 
     <!-- ============ FILTERS ============ -->
-    <form method="GET" class="bg-white p-5 rounded-xl shadow">
+    <form method="GET" class="bg-white p-5 rounded-xl shadow mb-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
                 <label class="text-sm font-medium">Cari Siswa</label>
@@ -86,91 +85,109 @@
         </div>
     </form>
 
-    <!-- ============ TABLE ============ -->
-    <div class="bg-white p-5 rounded-xl shadow overflow-x-auto">
-        <table class="w-full text-left text-sm">
-            <thead class="border-b text-gray-500">
-                <tr>
-                    <th class="py-3">Nama</th>
-                    <th>Alamat</th>
-                    <th>JK</th>
-                    <th>Jurusan</th>
-                    <th>Pembimbing</th>
-                    <th>DUDI</th>
-                    <th>Kelas</th>
-                    <th>Kendaraan</th>
-                    <th class="text-right">Aksi</th>
-                </tr>
-            </thead>
+    {{-- ================= TABEL SISWA ================= --}}
+    <div class="hidden md:block bg-white rounded-2xl shadow-md p-6">
 
-            <tbody class="divide-y">
+        {{-- FLASH MESSAGE --}}
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 p-3 rounded-lg mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-3 text-left">No</th>
+                        <th class="px-4 py-3">Nama</th>
+                        <th class="px-4 py-3">JK</th>
+                        <th class="px-4 py-3">Jurusan</th>
+                        <th class="px-4 py-3">Pembimbing</th>
+                        <th class="px-4 py-3">DUDI</th>
+                        <th class="px-4 py-3 text-center">Kelas</th>
+                        <th class="px-4 py-3 text-center">Kendaraan</th>
+                        <th class="px-4 py-3 text-center">Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
                 @forelse($siswa as $row)
-                    <tr class="hover:bg-gray-50">
-                        <td class="py-3 font-semibold">
+                    <tr class="border-b hover:bg-gray-50 transition">
+
+                        <td class="px-4 py-3">
+                            {{ $siswa->firstItem() + $loop->index }}
+                        </td>
+
+                        <td class="px-4 py-3 font-medium">
                             {{ $row->nama }}
                         </td>
 
-                        <td class="max-w-xs truncate">
-                            {{ $row->alamat ?? '-' }}
-                        </td>
-
-                        <td>
+                        <td class="px-4 py-3">
                             {{ $row->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}
                         </td>
 
-                        <td>
+                        <td class="px-4 py-3">
                             {{ $row->jurusan->jurusan ?? '-' }}
                         </td>
 
-                        <td>
+                        <td class="px-4 py-3">
                             {{ $row->pembimbing->nama ?? '-' }}
                         </td>
 
-                        <td>
+                        <td class="px-4 py-3">
                             {{ $row->dudi->nama ?? '-' }}
                         </td>
 
-                        <td>
+                        <td class="px-4 py-3 text-center">
                             {{ $row->kelas }}
                         </td>
 
-                        <td>
-                            {{ $row->kendaraan ?? '-' }}
+                        <td class="px-4 py-3 text-center">
+                            {{ $row->kendaraan === 'pribadi' ? 'Pribadi' : 'Umum' }}
                         </td>
 
-                        <td class="text-right space-x-2 whitespace-nowrap">
-                            <a href="{{ route('siswa.edit', $row->id_siswa) }}"
-                            class="text-blue-600 hover:underline">
-                                Edit
-                            </a>
+                        <td class="px-4 py-3">
+                            <div class="flex justify-center gap-2">
 
-                            <form action="{{ route('siswa.destroy', $row->id_siswa) }}"
-                                method="POST"
-                                class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button class="text-red-600 hover:underline"
-                                    onclick="return confirm('Hapus data siswa ini?')">
-                                    Hapus
-                                </button>
-                            </form>
+                                {{-- EDIT --}}
+                                <a href="{{ route('siswa.edit', $row->id_siswa) }}"
+                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-xs">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                {{-- DELETE --}}
+                                <form action="{{ route('siswa.destroy', $row->id_siswa) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus data siswa ini?')">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+
+                            </div>
                         </td>
+
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="10" class="text-center py-6 text-gray-500">
-                            Data siswa tidak ditemukan
+                        <td colspan="9" class="text-center py-8 text-gray-500">
+                            Data siswa belum tersedia
                         </td>
                     </tr>
                 @endforelse
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
 
         <div class="mt-4">
-            {{ $siswa->links() }}
+            {{ $siswa->withQueryString()->links() }}
         </div>
     </div>
 
-    </div>
 </div>
 @endsection

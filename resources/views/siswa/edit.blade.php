@@ -4,140 +4,165 @@
 
 @section('content')
 
-<div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow">
-
-    <!-- HEADER -->
-    <div class="greeting-card rounded-2xl shadow-lg p-6 mb-6 bg-linear-to-r from-blue-500 to-blue-600 text-white">
-        <h2 class="text-3xl font-bold">
-            Edit Data Siswa PKL
-        </h2>
+{{-- ================= HEADER ================= --}}
+<div class="mb-6 animate-slide-down">
+    <div class="greeting-card rounded-2xl shadow-lg p-6 md:p-8">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-1">
+                Edit Siswa PKL
+            </h1>
+            <p class="text-white/80 text-sm">
+                Perbarui data siswa peserta PKL
+            </p>
+        </div>
     </div>
-
-    <form action="{{ route('siswa.update', $siswa->id_siswa) }}" method="POST" class="space-y-4">
-        @csrf
-        @method('PUT')
-
-        <!-- NAMA -->
-        <div>
-            <label class="font-medium">Nama</label>
-            <input type="text" name="nama"
-                   value="{{ old('nama', $siswa->nama) }}"
-                   class="w-full border rounded-lg px-3 py-2" required>
-        </div>
-
-        <!-- ALAMAT -->
-        <div>
-            <label class="font-medium">Alamat</label>
-            <textarea name="alamat"
-                      class="w-full border rounded-lg px-3 py-2">{{ old('alamat', $siswa->alamat) }}</textarea>
-        </div>
-
-        <!-- JENIS KELAMIN -->
-        <div>
-            <label class="font-medium">Jenis Kelamin</label>
-            <select name="jenis_kelamin"
-                    class="w-full border rounded-lg px-3 py-2" required>
-                <option value="L" @selected(old('jenis_kelamin', $siswa->jenis_kelamin) == 'L')>
-                    Laki-laki
-                </option>
-                <option value="P" @selected(old('jenis_kelamin', $siswa->jenis_kelamin) == 'P')>
-                    Perempuan
-                </option>
-            </select>
-        </div>
-
-        <!-- JURUSAN -->
-        <div>
-            <label class="font-medium">Jurusan</label>
-            <select name="id_jurusan"
-                    class="w-full border rounded-lg px-3 py-2 text-gray-800" required>
-                @foreach($jurusan as $j)
-                    <option value="{{ $j->id_jurusan }}"
-                        @selected(old('id_jurusan', $siswa->id_jurusan) == $j->id_jurusan)>
-                        {{ $j->jurusan }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- PEMBIMBING -->
-        <div>
-            <label class="font-medium">Pembimbing</label>
-            <select name="id_pembimbing"
-                    class="w-full border rounded-lg px-3 py-2 text-gray-800" required>
-                @foreach($pembimbing as $p)
-                    <option value="{{ $p->id_pembimbing }}"
-                        @selected(old('id_pembimbing', $siswa->id_pembimbing) == $p->id_pembimbing)>
-                        {{ $p->nama }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- DUDI -->
-        <div>
-            <label class="font-medium">DUDI</label>
-            <select name="id_dudi"
-                    class="w-full border rounded-lg px-3 py-2 text-gray-800 bg-white" required>
-                @foreach($dudi as $d)
-                    <option value="{{ $d->id_dudi }}"
-                            class="text-gray-800 bg-white"
-                            @selected(old('id_dudi', $siswa->id_dudi) == $d->id_dudi)>
-                        {{ $d->nama }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- KELAS -->
-        <div>
-            <label class="font-medium">Kelas</label>
-            <input type="text" name="kelas"
-                   value="{{ old('kelas', $siswa->kelas) }}"
-                   class="w-full border rounded-lg px-3 py-2" required>
-        </div>
-
-        <!-- KENDARAAN -->
-        <div>
-            <label class="font-medium">Kendaraan</label>
-
-            <select
-                name="kendaraan"
-                class="w-full border rounded-lg px-3 py-2 bg-white text-gray-800"
-                required>
-
-                <option value=""
-                    style="background-color:#ffffff; color:#9ca3af;"
-                    @selected(old('kendaraan', $siswa->kendaraan) == '')>
-                    -- Pilih --
-                </option>
-
-                <option value="pribadi"
-                    style="background-color:#ffffff; color:#1f2937;"
-                    @selected(old('kendaraan', $siswa->kendaraan) == 'pribadi')>
-                    Kendaraan Pribadi
-                </option>
-
-                <option value="umum"
-                    style="background-color:#ffffff; color:#1f2937;"
-                    @selected(old('kendaraan', $siswa->kendaraan) == 'umum')>
-                    Kendaraan Umum
-                </option>
-            </select>
-        </div>
-
-        <!-- BUTTON -->
-        <div class="flex justify-end gap-3 pt-4">
-            <a href="{{ route('siswa.index') }}"
-                class="px-4 py-2 rounded-lg border">
-                Batal
-            </a>
-
-            <button class="bg-blue-600 text-white px-6 py-2 rounded-lg">
-                Update
-            </button>
-        </div>
-    </form>
 </div>
+
+{{-- ================= FORM ================= --}}
+<div class="container mx-auto">
+    <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 animate-scale-fade">
+
+        <form action="{{ route('siswa.update', $siswa->id_siswa) }}"
+              method="POST"
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @csrf
+            @method('PUT')
+
+            {{-- Nama --}}
+            <div>
+                <label class="block font-semibold mb-1">Nama</label>
+                <input type="text"
+                       name="nama"
+                       value="{{ old('nama', $siswa->nama) }}"
+                       required
+                       class="form-input">
+            </div>
+
+            {{-- Jenis Kelamin --}}
+            <div>
+                <label class="block font-semibold mb-1">Jenis Kelamin</label>
+                <select name="jenis_kelamin"
+                        required
+                        class="form-input">
+                    <option value="L"
+                        @selected(old('jenis_kelamin', $siswa->jenis_kelamin) == 'L')>
+                        Laki-laki
+                    </option>
+                    <option value="P"
+                        @selected(old('jenis_kelamin', $siswa->jenis_kelamin) == 'P')>
+                        Perempuan
+                    </option>
+                </select>
+            </div>
+
+            {{-- Alamat --}}
+            <div class="md:col-span-2">
+                <label class="block font-semibold mb-1">Alamat</label>
+                <textarea name="alamat"
+                          rows="3"
+                          class="form-input">{{ old('alamat', $siswa->alamat) }}</textarea>
+            </div>
+
+            {{-- Jurusan --}}
+            <div>
+                <label class="block font-semibold mb-1">Jurusan</label>
+                <select name="id_jurusan"
+                        required
+                        class="form-input">
+                    @foreach($jurusan as $j)
+                        <option value="{{ $j->id_jurusan }}"
+                            @selected(old('id_jurusan', $siswa->id_jurusan) == $j->id_jurusan)>
+                            {{ $j->jurusan }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Pembimbing --}}
+            <div>
+                <label class="block font-semibold mb-1">Pembimbing</label>
+                <select name="id_pembimbing"
+                        required
+                        class="form-input">
+                    @foreach($pembimbing as $p)
+                        <option value="{{ $p->id_pembimbing }}"
+                            @selected(old('id_pembimbing', $siswa->id_pembimbing) == $p->id_pembimbing)>
+                            {{ $p->nama }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- DUDI --}}
+            <div>
+                <label class="block font-semibold mb-1">DUDI</label>
+                <select name="id_dudi"
+                        required
+                        class="form-input">
+                    @foreach($dudi as $d)
+                        <option value="{{ $d->id_dudi }}"
+                            @selected(old('id_dudi', $siswa->id_dudi) == $d->id_dudi)>
+                            {{ $d->nama }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Kelas --}}
+            <div>
+                <label class="block font-semibold mb-1">Kelas</label>
+                <input type="text"
+                       name="kelas"
+                       value="{{ old('kelas', $siswa->kelas) }}"
+                       required
+                       class="form-input">
+            </div>
+
+            {{-- Kendaraan --}}
+            <div class="md:col-span-2">
+                <label class="block font-semibold mb-1">Kendaraan</label>
+                <select name="kendaraan"
+                        required
+                        class="form-input">
+                    <option value="">-- Pilih --</option>
+                    <option value="pribadi"
+                        @selected(old('kendaraan', $siswa->kendaraan) == 'pribadi')>
+                        Kendaraan Pribadi
+                    </option>
+                    <option value="umum"
+                        @selected(old('kendaraan', $siswa->kendaraan) == 'umum')>
+                        Kendaraan Umum
+                    </option>
+                </select>
+            </div>
+
+            {{-- ================= BUTTON ================= --}}
+            <div class="md:col-span-2 flex justify-between items-center mt-6">
+
+                <a href="{{ route('siswa.index') }}"
+                   class="px-6 py-3 rounded-xl border font-semibold hover:bg-gray-100 transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali
+                </a>
+
+                <div class="flex gap-3">
+                    <a href="{{ route('siswa.index') }}"
+                       class="px-6 py-3 rounded-xl border font-semibold hover:bg-gray-100 transition">
+                        Batal
+                    </a>
+
+                    <button type="submit"
+                            class="bg-primary text-white px-6 py-3 rounded-xl font-semibold
+                                   hover:bg-primary/90 hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-save mr-2"></i> Update Data
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@include('layouts.animation')
 
 @endsection

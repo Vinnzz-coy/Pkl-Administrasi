@@ -50,7 +50,10 @@ Ikuti langkah-langkah di bawah ini untuk menginstal dan menjalankan aplikasi sec
 Buka Terminal atau Command Prompt, lalu jalankan perintah berikut:
 
 ```bash
-git clone [https://github.com/Vinnzz-coy/administrator-pkl.git](https://github.com/Vinnzz-coy/administrator-pkl.git)
+git clone https://github.com/Vinnzz-coy/Pkl-Administrasi.git
+````
+
+```bash
 cd administrator-pkl
 ````
 

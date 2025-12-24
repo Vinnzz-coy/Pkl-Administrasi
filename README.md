@@ -90,12 +90,12 @@ cp .env.example .env
 Buka file `.env` dan sesuaikan pengaturan koneksi database PostgreSQL Anda:
 
 ```dotenv
-DB_CONNECTION=pgsql
+DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
-DB_PORT=5432
+DB_PORT=3306
 DB_DATABASE=administrasi_pkl # Ganti sesuai nama database Anda
-DB_USERNAME=postgres         # Ganti sesuai username database Anda
-DB_PASSWORD=YOUR_PASSWORD    # Ganti sesuai password database Anda
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
 #### 5\. Generate Application Key
